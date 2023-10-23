@@ -4,6 +4,7 @@ import AppBreadcrumbs, {
   AppBreadcrumbsProps,
   BreadcrumbItem,
 } from "./AppBreadcrumbs";
+import { Card } from "@radix-ui/themes";
 
 type AppBreadcrumbsStoryProps = AppBreadcrumbsProps;
 type Story = StoryObj<typeof AppBreadcrumbs>;
@@ -14,7 +15,11 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ];
 
 export const Breadcrumbs: Story = (args: AppBreadcrumbsStoryProps) => {
-  return <AppBreadcrumbs {...args} />;
+  return (
+    <Card>
+      <AppBreadcrumbs {...args} />
+    </Card>
+  );
 };
 Breadcrumbs.args = {
   breadcrumbs: breadcrumbItems,

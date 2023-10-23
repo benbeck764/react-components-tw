@@ -1,17 +1,23 @@
-import React from "react";
-import type { Preview } from "@storybook/react";
+import React, { FC, PropsWithChildren } from "react";
+import type { Preview, StoryContext } from "@storybook/react";
+import { useDarkMode } from "storybook-dark-mode";
 import { Theme, ThemeOptions } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "tailwindcss/tailwind.css";
 
-const themeProps: ThemeOptions = {
-  // https://github.com/vercel/next.js/discussions/22388#discussioncomment-7282793
-  appearance: "inherit",
-  accentColor: "blue",
-  grayColor: "gray",
-  panelBackground: "solid",
-  radius: "medium",
-  scaling: "100%",
+const ThemeWrapper: FC<PropsWithChildren<{ context: StoryContext<any> }>> = (
+  props: PropsWithChildren<{ context: StoryContext<any> }>
+) => {
+  const { children } = props;
+  const themeProps: ThemeOptions = {
+    appearance: useDarkMode() ? "dark" : "light",
+    accentColor: "blue",
+    grayColor: "gray",
+    panelBackground: "solid",
+    radius: "medium",
+    scaling: "100%",
+  };
+  return <Theme {...themeProps}>{children}</Theme>;
 };
 
 const preview: Preview = {
@@ -25,10 +31,10 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
-      <Theme {...themeProps}>
+    (Story, context) => (
+      <ThemeWrapper context={context}>
         <Story />
-      </Theme>
+      </ThemeWrapper>
     ),
   ],
 };
