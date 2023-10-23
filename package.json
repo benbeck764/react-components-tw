@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "React components built utilizing Tailwind CSS & Radix UI.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benbeck764/react-components-tw.git"
+  },
+  "keywords": [
+    "react",
+    "tailwind",
+    "css",
+    "radix"
+  ],
+  "author": "Ben Beck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benbeck764/react-components-tw/issues"
+  },
+  "homepage": "https://github.com/benbeck764/react-components-tw#readme"
+}
