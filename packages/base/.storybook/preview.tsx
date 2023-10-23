@@ -1,13 +1,11 @@
 import React, { FC, PropsWithChildren } from "react";
 import type { Preview, StoryContext } from "@storybook/react";
 import { useDarkMode } from "storybook-dark-mode";
-import { Theme, ThemeOptions } from "@radix-ui/themes";
+import { Theme, ThemeOptions, ThemePanel, Card } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import "tailwindcss/tailwind.css";
 
-const ThemeWrapper: FC<PropsWithChildren<{ context: StoryContext<any> }>> = (
-  props: PropsWithChildren<{ context: StoryContext<any> }>
-) => {
+const ThemeWrapper: FC<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;
   const themeProps: ThemeOptions = {
     appearance: useDarkMode() ? "dark" : "light",
@@ -17,7 +15,12 @@ const ThemeWrapper: FC<PropsWithChildren<{ context: StoryContext<any> }>> = (
     radius: "medium",
     scaling: "100%",
   };
-  return <Theme {...themeProps}>{children}</Theme>;
+
+  return (
+    <Theme {...themeProps}>
+      <Card>{children} </Card>
+    </Theme>
+  );
 };
 
 const preview: Preview = {
@@ -32,7 +35,8 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => (
-      <ThemeWrapper context={context}>
+      <ThemeWrapper>
+        <ThemePanel />
         <Story />
       </ThemeWrapper>
     ),

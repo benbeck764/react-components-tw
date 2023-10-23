@@ -6,7 +6,13 @@ type AppCheckboxStoryProps = AppCheckboxProps;
 type Story = StoryObj<typeof AppCheckbox>;
 
 export const Checkboxes: Story = (args: AppCheckboxStoryProps) => {
-  return <AppCheckbox {...args} />;
+  return (
+    <>
+      <AppCheckbox size="small" {...args} />
+      <AppCheckbox size="medium" {...args} />
+      <AppCheckbox size="large" {...args} />
+    </>
+  );
 };
 Checkboxes.args = {
   //breadcrumbs: breadcrumbItems,

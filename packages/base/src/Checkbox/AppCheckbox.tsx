@@ -1,11 +1,22 @@
 "use client";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { Responsive, useThemeContext } from "@radix-ui/themes";
+import {
+  Text,
+  Responsive,
+  useThemeContext,
+  Flex,
+  Checkbox as Checkbox2,
+  GetPropDefTypes,
+  themePropDefs,
+} from "@radix-ui/themes";
 import { CheckIcon } from "@radix-ui/react-icons";
 
+type ThemeProps = GetPropDefTypes<typeof themePropDefs>;
+type ThemeRadius = NonNullable<ThemeProps["radius"]>;
+
 export type AppCheckboxProps = {
-  size?: Responsive<"1" | "2" | "3">;
+  size?: "small" | "medium" | "large";
   variant?: "classic" | "surface" | "soft";
   className?: string;
   highContrast?: boolean;
@@ -14,32 +25,52 @@ export type AppCheckboxProps = {
 const AppCheckbox: FC<PropsWithChildren<AppCheckboxProps>> = (
   props: PropsWithChildren<AppCheckboxProps>
 ) => {
-  const { children, size, variant, className } = { ...props };
+  const { children, size = "medium", variant, className } = { ...props };
+  const theme = useThemeContext();
+
+  const [checked, setChecked] = useState("indeterminate");
+
+  const baseStyles = "flex items-center justify-center border border-gray-400 ";
 
   const sizeStyles = {
-    1: "h-[16px] w-[16px]",
-    2: "h-[20px] w-[20px]",
-    3: "h-[24px] w-[24px]",
+    small: "h-[16px] w-[16px]",
+    medium: "h-[20px] w-[20px]",
+    large: "h-[24px] w-[24px]",
   };
 
+  const iconStyles = {
+    small: "h-[14px] w-[14px]",
+    medium: "h-[18px] w-[18px]",
+    large: "h-[22px] w-[22px]",
+  };
+
+  const radiusStyles = {
+    none: "rounded-none",
+    small: "rounded-sm",
+    medium: "rounded",
+    large: "rounded-md",
+    full: "rounded-md",
+  };
+
+  const styles = `${baseStyles} ${sizeStyles[size]} ${
+    radiusStyles[theme.radius]
+  } hover:bg-${theme.accentColor}-600`;
+
   return (
-    <div className="flex items-center">
-      <Checkbox.Root
-        className="hover:bg-violet3 flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-[4px] bg-white outline-none"
-        defaultChecked
-        id="c1"
-      >
-        <Checkbox.Indicator className="text-violet11">
-          <CheckIcon />
+    <Flex align="center" gap="3" py="1">
+      <Checkbox.Root className={styles} defaultChecked id="c1">
+        <Checkbox.Indicator>
+          <CheckIcon className={iconStyles[size]} />
         </Checkbox.Indicator>
       </Checkbox.Root>
-      <label
-        className="pl-[15px] text-[15px] leading-none text-black"
+      <Text
+        as="label"
         htmlFor="c1"
+        size={size === "small" ? "1" : size === "medium" ? "2" : "3"}
       >
         Accept terms and conditions.
-      </label>
-    </div>
+      </Text>
+    </Flex>
   );
 };
 
