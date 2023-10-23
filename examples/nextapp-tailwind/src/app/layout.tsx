@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Box } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import "@benbeck764/react-components-tw/styles.css";
+import "./globals.css";
 import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Box p="5">{children}</Box>
+          <div className="p-5">{children}</div>
         </Providers>
       </body>
     </html>

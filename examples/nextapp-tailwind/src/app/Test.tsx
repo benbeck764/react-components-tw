@@ -5,7 +5,7 @@ import {
   AppCard,
   BreadcrumbItem,
 } from "@benbeck764/react-components-tw";
-import { Box, Button, Flex, Heading } from "@radix-ui/themes";
+import { Button, Flex, Heading } from "@radix-ui/themes";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { AppContext, AppContextValues } from "./Providers";
 
@@ -28,7 +28,7 @@ const Test: FC = () => {
   };
 
   return (
-    <Box p="2">
+    <div className="p-2">
       <AppCard size="3">
         <Flex direction="row" align="center" justify="between">
           <Heading as="h1" mb="2">
@@ -47,7 +47,7 @@ const Test: FC = () => {
         </Flex>
         <AppBreadcrumbs breadcrumbs={breadcrumbs}></AppBreadcrumbs>
       </AppCard>
-    </Box>
+    </div>
   );
 };
 

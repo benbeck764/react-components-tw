@@ -7,6 +7,12 @@
     "type": "git",
     "url": "git+https://github.com/benbeck764/react-components-tw.git"
   },
+  "scripts": {
+    "build": "pnpm -r --filter=\"./packages/*\" run build",
+    "build:examples": "pnpm -r --filter=\"./examples/*\" run build",
+    "clean": "pnpm -r --filter=\"./packages/*\" run clean",
+    "clean:examples": "pnpm -r --filter=\"./examples/*\" run clean && rimraf node_modules"
+  },
   "keywords": [
     "react",
     "tailwind",
