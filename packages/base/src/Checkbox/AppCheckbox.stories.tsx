@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import AppCheckbox, { AppCheckboxProps, CheckboxItem } from "./AppCheckbox";
-import { Box, Flex } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 
 type AppCheckboxStoryProps = AppCheckboxProps;
 type Story = StoryObj<typeof AppCheckbox>;
@@ -30,23 +30,9 @@ export const Checkboxes: Story = (args: AppCheckboxStoryProps) => {
       <Flex gap="4">
         <Flex direction="column" gap="4">
           <Box>
-            <AppCheckbox {...args} size="small" item={items[0]} />
-            <AppCheckbox {...args} size="small" item={items[1]} />
-            <AppCheckbox {...args} size="small" item={items[2]} />
-          </Box>
-          <Box>
-            <AppCheckbox {...args} size="medium" item={items[0]} />
-            <AppCheckbox {...args} size="medium" item={items[1]} />
-            <AppCheckbox {...args} size="medium" item={items[2]} />
-          </Box>
-          <Box>
-            <AppCheckbox {...args} size="large" item={items[0]} />
-            <AppCheckbox {...args} size="large" item={items[1]} />
-            <AppCheckbox {...args} size="large" item={items[2]} />
-          </Box>
-        </Flex>
-        <Flex direction="column" gap="4">
-          <Box>
+            <Text as="p" mb="2">
+              (Classic)
+            </Text>
             <AppCheckbox {...args} size="small" item={itemsChecked[0]} />
             <AppCheckbox {...args} size="small" item={itemsChecked[1]} />
             <AppCheckbox
@@ -79,6 +65,145 @@ export const Checkboxes: Story = (args: AppCheckboxStoryProps) => {
         </Flex>
         <Flex direction="column" gap="4">
           <Box>
+            <Text as="p" mb="2">
+              (Surface)
+            </Text>
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="surface"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="surface"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="surface"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+          <Box>
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="surface"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="surface"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="surface"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+          <Box>
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="surface"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="surface"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="surface"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+        </Flex>
+        <Flex direction="column" gap="4">
+          <Box>
+            <Text as="p" mb="2">
+              (Soft)
+            </Text>
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="soft"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="soft"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="small"
+              variant="soft"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+          <Box>
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="soft"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="soft"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="medium"
+              variant="soft"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+          <Box>
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="soft"
+              item={itemsChecked[0]}
+            />
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="soft"
+              item={itemsChecked[1]}
+            />
+            <AppCheckbox
+              {...args}
+              size="large"
+              variant="soft"
+              item={itemsChecked[2]}
+              icon="minus"
+            />
+          </Box>
+        </Flex>
+        <Flex direction="column" gap="4">
+          <Box>
+            <Text as="p" mb="2">
+              Disabled
+            </Text>
             <AppCheckbox {...args} size="small" item={itemsDisabled[0]} />
             <AppCheckbox {...args} size="small" item={itemsDisabled[1]} />
             <AppCheckbox

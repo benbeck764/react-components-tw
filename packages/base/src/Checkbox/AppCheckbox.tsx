@@ -1,7 +1,12 @@
 "use client";
 import { FC, useState, useId } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { Text, useThemeContext, Flex } from "@radix-ui/themes";
+import {
+  Text,
+  useThemeContext,
+  Flex,
+  getMatchingGrayColor,
+} from "@radix-ui/themes";
 import { CheckIcon, MinusIcon } from "@radix-ui/react-icons";
 import { isString } from "../utilities/string";
 
@@ -26,13 +31,18 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
   const {
     item,
     size = "medium",
-    variant,
+    variant = "classic",
     icon = "check",
     className,
     onCheckedChanged,
   } = { ...props };
 
   const theme = useThemeContext();
+  const { appearance, accentColor, radius } = theme;
+  const grayColor =
+    theme.grayColor === "auto"
+      ? getMatchingGrayColor(accentColor)
+      : theme.grayColor;
   const id = useId();
 
   const [checked, setChecked] = useState(Boolean(item.checked));
@@ -46,14 +56,14 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
 
   const baseStyles = `flex items-center justify-center`;
 
-  const disabledColor = {
+  const textColor = {
     dark: {
       enabled: `text-inherit`,
-      disabled: `text-gray-700`,
+      disabled: `text-${grayColor}DarkA-700`,
     },
     light: {
       enabled: `text-inherit`,
-      disabled: `text-gray-700`,
+      disabled: `text-${grayColor}A-700`,
     },
     inherit: {
       enabled: `text-inherit`,
@@ -61,18 +71,39 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
     },
   };
 
-  const conditionalStyles = {
-    dark: {
-      enabled: `border border-gray-300 hover:bg-${theme.accentColor}-800`,
-      disabled: `border border-gray-700 bg-gray-1200`,
+  const borderStyles = {
+    light: props.item.disabled
+      ? `border border-${grayColor}A-700`
+      : variant === "soft"
+      ? `border-none`
+      : `border border-${grayColor}A-500`,
+    dark: props.item.disabled
+      ? `border border-${grayColor}DarkA-700`
+      : variant === "soft"
+      ? `border-none`
+      : `border border-${grayColor}DarkA-500`,
+    inherit: `border border-inherit`,
+  };
+
+  const backgroundStyles = {
+    classic: {
+      light: props.item.disabled ? `bg-${grayColor}A-300` : ``,
+      dark: props.item.disabled ? `bg-${grayColor}DarkA-1200` : ``,
+      inherit: ``,
     },
-    light: {
-      enabled: `border border-gray-300 hover:bg-${theme.accentColor}-800 `,
-      disabled: `border border-gray-700 bg-gray-300`,
+    surface: {
+      light: props.item.disabled ? `bg-${grayColor}A-300` : ``,
+      dark: props.item.disabled ? `bg-${grayColor}DarkA-1200` : ``,
+      inherit: ``,
     },
-    inherit: {
-      enabled: `border border-inherit hover:bg-${theme.accentColor}-800`,
-      disabled: `border border-inherit bg-inherit`,
+    soft: {
+      light: props.item.disabled
+        ? `bg-${grayColor}A-300`
+        : `bg-${accentColor}A-500`,
+      dark: props.item.disabled
+        ? `bg-${grayColor}DarkA-1200`
+        : `bg-${accentColor}Dark-500`,
+      inherit: ``,
     },
   };
 
@@ -80,12 +111,6 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
     small: "h-[16px] w-[16px]",
     medium: "h-[20px] w-[20px]",
     large: "h-[24px] w-[24px]",
-  };
-
-  const iconStyles = {
-    small: "h-[14px] w-[14px]",
-    medium: "h-[18px] w-[18px]",
-    large: "h-[22px] w-[22px]",
   };
 
   const radiusStyles = {
@@ -96,11 +121,38 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
     full: "rounded-md",
   };
 
-  const checkboxStyles = `${baseStyles} ${sizeStyles[size]} ${
-    radiusStyles[theme.radius]
-  } ${
-    conditionalStyles[theme.appearance][item.disabled ? "disabled" : "enabled"]
-  }`;
+  const checkboxStyles = `${baseStyles} ${sizeStyles[size]} ${radiusStyles[radius]}
+   ${borderStyles[appearance]} ${backgroundStyles[variant][appearance]}`;
+
+  const iconSizes = {
+    small: "h-[14px] w-[14px]",
+    medium: "h-[18px] w-[18px]",
+    large: "h-[22px] w-[22px]",
+  };
+
+  const iconColors = {
+    classic: {
+      light: props.item.disabled ? `text-${grayColor}A-700` : ``,
+      dark: props.item.disabled ? `text-${grayColor}DarkA-800` : ``,
+      inherit: `text-inherit`,
+    },
+    surface: {
+      light: props.item.disabled ? `text-${grayColor}A-700` : ``,
+      dark: props.item.disabled ? `text-${grayColor}DarkA-800` : ``,
+      inherit: `text-inherit`,
+    },
+    soft: {
+      light: props.item.disabled
+        ? `text-${grayColor}A-700`
+        : `text-${accentColor}A-1100`,
+      dark: props.item.disabled
+        ? `text-${grayColor}DarkA-800`
+        : `text-${accentColor}Dark-1100`,
+      inherit: `text-inherit`,
+    },
+  };
+
+  const iconStyles = `${iconSizes[size]} ${iconColors[variant][appearance]}`;
 
   return (
     <Flex align="center" gap="3" py="1" className={className}>
@@ -113,21 +165,9 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
       >
         <Checkbox.Indicator>
           {icon === "check" ? (
-            <CheckIcon
-              className={`${iconStyles[size]} ${
-                disabledColor[theme.appearance][
-                  item.disabled ? "disabled" : "enabled"
-                ]
-              }`}
-            />
+            <CheckIcon className={iconStyles} />
           ) : (
-            <MinusIcon
-              className={`${iconStyles[size]} ${
-                disabledColor[theme.appearance][
-                  item.disabled ? "disabled" : "enabled"
-                ]
-              }`}
-            />
+            <MinusIcon className={iconStyles} />
           )}
         </Checkbox.Indicator>
       </Checkbox.Root>
@@ -135,9 +175,7 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
       {isString(item.label) ? (
         <Text
           className={`${
-            disabledColor[theme.appearance][
-              item.disabled ? "disabled" : "enabled"
-            ]
+            textColor[appearance][item.disabled ? "disabled" : "enabled"]
           }`}
           as="label"
           htmlFor={id}

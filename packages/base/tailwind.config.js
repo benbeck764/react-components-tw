@@ -1,78 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-import { themePropDefs } from "@radix-ui/themes";
-import {
-  tomato,
-  red,
-  ruby,
-  crimson,
-  pink,
-  plum,
-  purple,
-  violet,
-  iris,
-  indigo,
-  blue,
-  cyan,
-  teal,
-  jade,
-  green,
-  grass,
-  brown,
-  orange,
-  sky,
-  mint,
-  lime,
-  yellow,
-  amber,
-  gold,
-  bronze,
-  gray,
-} from "@radix-ui/colors";
-
-const allColors = [
-  tomato,
-  red,
-  ruby,
-  crimson,
-  pink,
-  plum,
-  purple,
-  violet,
-  iris,
-  indigo,
-  blue,
-  cyan,
-  teal,
-  jade,
-  green,
-  grass,
-  brown,
-  orange,
-  sky,
-  mint,
-  lime,
-  yellow,
-  amber,
-  gold,
-  bronze,
-  gray,
-];
+import * as radix from "@radix-ui/colors";
 
 function generateSafelistsPattern() {
-  const colors = themePropDefs.accentColor.values.join("|");
+  const colors = Object.keys(radix).join("|");
   const scale = Array.from(Array(12).keys())
     .map((num) => num * 100 + 100)
     .join("|");
-  const pattern = `bg-(${colors})-(${scale})`;
+  const pattern = `(bg|text)-(${colors})-(${scale})`;
   return new RegExp(pattern);
 }
 
 function generateRadixPalettes() {
   const palettes = {};
-  allColors.forEach((color) => {
-    const colorName = Object.keys(color)[0].slice(0, -1);
+  Object.entries(radix).forEach(([colorName, color]) => {
     palettes[colorName] = {};
-    Object.entries(color).forEach(([_shadeName, shade], index) => {
+    Object.entries(color).forEach(([_, shade], index) => {
       palettes[colorName][index * 100 + 100] = shade;
     });
   });
