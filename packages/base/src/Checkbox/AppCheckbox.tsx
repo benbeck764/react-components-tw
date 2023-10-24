@@ -1,36 +1,80 @@
 "use client";
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, useState, useId } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import {
-  Text,
-  Responsive,
-  useThemeContext,
-  Flex,
-  Checkbox as Checkbox2,
-  GetPropDefTypes,
-  themePropDefs,
-} from "@radix-ui/themes";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { Text, useThemeContext, Flex } from "@radix-ui/themes";
+import { CheckIcon, MinusIcon } from "@radix-ui/react-icons";
+import { isString } from "../utilities/string";
 
-type ThemeProps = GetPropDefTypes<typeof themePropDefs>;
-type ThemeRadius = NonNullable<ThemeProps["radius"]>;
-
-export type AppCheckboxProps = {
-  size?: "small" | "medium" | "large";
-  variant?: "classic" | "surface" | "soft";
-  className?: string;
-  highContrast?: boolean;
+export type CheckboxItem = {
+  label: string | JSX.Element;
+  checked: boolean;
+  name?: string;
+  disabled?: boolean;
 };
 
-const AppCheckbox: FC<PropsWithChildren<AppCheckboxProps>> = (
-  props: PropsWithChildren<AppCheckboxProps>
-) => {
-  const { children, size = "medium", variant, className } = { ...props };
+export type AppCheckboxProps = {
+  item: CheckboxItem;
+  size?: "small" | "medium" | "large";
+  variant?: "classic" | "surface" | "soft";
+  icon?: "check" | "minus";
+  className?: string;
+  highContrast?: boolean;
+  onCheckedChanged?: (item: CheckboxItem) => void;
+};
+
+const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
+  const {
+    item,
+    size = "medium",
+    variant,
+    icon = "check",
+    className,
+    onCheckedChanged,
+  } = { ...props };
+
   const theme = useThemeContext();
+  const id = useId();
 
-  const [checked, setChecked] = useState("indeterminate");
+  const [checked, setChecked] = useState(Boolean(item.checked));
 
-  const baseStyles = "flex items-center justify-center border border-gray-400 ";
+  const handleClick = () => {
+    const newValue = !checked;
+    setChecked(newValue);
+    const newItem: CheckboxItem = { ...props.item, checked: newValue };
+    onCheckedChanged?.(newItem);
+  };
+
+  const baseStyles = `flex items-center justify-center`;
+
+  const disabledColor = {
+    dark: {
+      enabled: `text-inherit`,
+      disabled: `text-gray-700`,
+    },
+    light: {
+      enabled: `text-inherit`,
+      disabled: `text-gray-700`,
+    },
+    inherit: {
+      enabled: `text-inherit`,
+      disabled: `text-inherit`,
+    },
+  };
+
+  const conditionalStyles = {
+    dark: {
+      enabled: `border border-gray-300 hover:bg-${theme.accentColor}-800`,
+      disabled: `border border-gray-700 bg-gray-1200`,
+    },
+    light: {
+      enabled: `border border-gray-300 hover:bg-${theme.accentColor}-800 `,
+      disabled: `border border-gray-700 bg-gray-300`,
+    },
+    inherit: {
+      enabled: `border border-inherit hover:bg-${theme.accentColor}-800`,
+      disabled: `border border-inherit bg-inherit`,
+    },
+  };
 
   const sizeStyles = {
     small: "h-[16px] w-[16px]",
@@ -52,24 +96,58 @@ const AppCheckbox: FC<PropsWithChildren<AppCheckboxProps>> = (
     full: "rounded-md",
   };
 
-  const styles = `${baseStyles} ${sizeStyles[size]} ${
+  const checkboxStyles = `${baseStyles} ${sizeStyles[size]} ${
     radiusStyles[theme.radius]
-  } hover:bg-${theme.accentColor}-600`;
+  } ${
+    conditionalStyles[theme.appearance][item.disabled ? "disabled" : "enabled"]
+  }`;
 
   return (
-    <Flex align="center" gap="3" py="1">
-      <Checkbox.Root className={styles} defaultChecked id="c1">
+    <Flex align="center" gap="3" py="1" className={className}>
+      <Checkbox.Root
+        className={checkboxStyles}
+        id={id}
+        checked={checked}
+        onCheckedChange={handleClick}
+        disabled={item.disabled}
+      >
         <Checkbox.Indicator>
-          <CheckIcon className={iconStyles[size]} />
+          {icon === "check" ? (
+            <CheckIcon
+              className={`${iconStyles[size]} ${
+                disabledColor[theme.appearance][
+                  item.disabled ? "disabled" : "enabled"
+                ]
+              }`}
+            />
+          ) : (
+            <MinusIcon
+              className={`${iconStyles[size]} ${
+                disabledColor[theme.appearance][
+                  item.disabled ? "disabled" : "enabled"
+                ]
+              }`}
+            />
+          )}
         </Checkbox.Indicator>
       </Checkbox.Root>
-      <Text
-        as="label"
-        htmlFor="c1"
-        size={size === "small" ? "1" : size === "medium" ? "2" : "3"}
-      >
-        Accept terms and conditions.
-      </Text>
+
+      {isString(item.label) ? (
+        <Text
+          className={`${
+            disabledColor[theme.appearance][
+              item.disabled ? "disabled" : "enabled"
+            ]
+          }`}
+          as="label"
+          htmlFor={id}
+          size={size === "small" ? "1" : size === "medium" ? "2" : "3"}
+        >
+          {item.label}
+        </Text>
+      ) : (
+        item.label ?? <></>
+      )}
     </Flex>
   );
 };
