@@ -9,6 +9,7 @@ import {
 } from "@radix-ui/themes";
 import { CheckIcon, MinusIcon } from "@radix-ui/react-icons";
 import { isString } from "../utilities/string";
+import { StyledCheckboxRoot } from "./AppCheckbox.styles";
 
 export type CheckboxItem = {
   label: string | JSX.Element;
@@ -156,7 +157,7 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
 
   return (
     <Flex align="center" gap="3" py="1" className={className}>
-      <Checkbox.Root
+      <StyledCheckboxRoot
         className={checkboxStyles}
         id={id}
         checked={checked}
@@ -170,7 +171,7 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
             <MinusIcon className={iconStyles} />
           )}
         </Checkbox.Indicator>
-      </Checkbox.Root>
+      </StyledCheckboxRoot>
 
       {isString(item.label) ? (
         <Text
