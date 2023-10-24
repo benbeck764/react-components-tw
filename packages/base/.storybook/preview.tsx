@@ -34,7 +34,7 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story, context) => (
+    (Story) => (
       <ThemeWrapper>
         <ThemePanel />
         <Story />
