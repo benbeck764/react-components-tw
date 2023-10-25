@@ -92,8 +92,16 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
       inherit: ``,
     },
     surface: {
-      light: props.item.disabled ? `bg-${grayColor}A-300` : ``,
-      dark: props.item.disabled ? `bg-${grayColor}DarkA-1200` : ``,
+      light: props.item.disabled
+        ? `bg-${grayColor}A-300`
+        : checked
+        ? `bg-${accentColor}A-900`
+        : `bg-none`,
+      dark: props.item.disabled
+        ? `bg-${grayColor}DarkA-1200`
+        : checked
+        ? `bg-${accentColor}Dark-900`
+        : `bg-none`,
       inherit: ``,
     },
     soft: {
