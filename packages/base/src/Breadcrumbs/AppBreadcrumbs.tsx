@@ -1,6 +1,6 @@
 "use client";
 import { FC, ReactNode } from "react";
-import { Text, Link } from "@radix-ui/themes";
+import { Text, Link, Flex, Box } from "@radix-ui/themes";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { isString } from "../utilities/string";
 
@@ -65,9 +65,9 @@ const AppBreadcrumbs: FC<AppBreadcrumbsProps> = (
   };
 
   return (
-    <div className="flex">
+    <Flex>
       {homeSettings?.include === true && (
-        <div className="flex items-center justify-center">
+        <Flex align="center" justify="center">
           {allowLinkableFirst ? (
             <Link
               size="3"
@@ -93,10 +93,10 @@ const AppBreadcrumbs: FC<AppBreadcrumbsProps> = (
             </Text>
           )}
           <ChevronRightIcon />
-        </div>
+        </Flex>
       )}
 
-      <div className="flex">
+      <Flex>
         {breadcrumbs.map((breadcrumb: BreadcrumbItem, index: number) => {
           const isLast = index === breadcrumbs.length - 1;
           const key = isString(breadcrumb.displayName)
@@ -104,9 +104,9 @@ const AppBreadcrumbs: FC<AppBreadcrumbsProps> = (
             : index;
 
           return (
-            <div key={key}>
+            <Box key={key}>
               {
-                <div className="flex items-center justify-center">
+                <Flex align="center" justify="center">
                   {isLast ? (
                     <Text size="3" weight="bold">
                       {breadcrumb.displayName}
@@ -124,13 +124,13 @@ const AppBreadcrumbs: FC<AppBreadcrumbsProps> = (
                       <ChevronRightIcon />
                     </>
                   )}
-                </div>
+                </Flex>
               }
-            </div>
+            </Box>
           );
         })}
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

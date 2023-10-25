@@ -33,8 +33,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build && pnpm build:tailwind",
-    "build:tailwind": "npx tailwindcss -i ./src/tailwind.css -o ./dist/styles.css --postcss --minify",
+    "build": "vite build",
     "clean": "rimraf dist && rimraf node_modules",
     "clean:dist": "rimraf dist",
     "storybook": "storybook dev -p 6006",
@@ -62,6 +61,7 @@
     "rimraf": "^5.0.1",
     "storybook": "7.5.1",
     "storybook-dark-mode": "^3.0.1",
+    "styled-components": "^6.1.0",
     "tailwindcss": "^3",
     "typescript": "^5.2.2",
     "vite": "^4.4.5",
