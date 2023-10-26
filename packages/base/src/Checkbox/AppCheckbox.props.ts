@@ -16,4 +16,5 @@ export type AppCheckboxProps = {
   icon?: AppCheckboxIconType;
   highContrast?: boolean;
   onCheckedChanged?: (item: CheckboxItem) => void;
+  hidden?: boolean;
 };

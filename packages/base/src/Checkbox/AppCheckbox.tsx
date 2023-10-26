@@ -1,7 +1,7 @@
 "use client";
-import { FC, useState, useId } from "react";
+import { FC, useState, useId, useEffect } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { Flex } from "@radix-ui/themes";
+import { Box, Flex } from "@radix-ui/themes";
 import { isString } from "../utilities/string";
 import {
   StyledCheckIcon,
@@ -17,11 +17,16 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
     size = "medium",
     variant = "classic",
     icon = "check",
+    hidden,
     onCheckedChanged,
   } = { ...props };
 
   const id = useId();
   const [checked, setChecked] = useState(Boolean(item.checked));
+
+  useEffect(() => {
+    setChecked(Boolean(props.item.checked));
+  }, [item.checked]);
 
   const handleClick = () => {
     const newValue = !checked;
@@ -31,14 +36,14 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
   };
 
   return (
-    <Flex align="center" gap="3" py="1">
+    <Flex align="center" gap="3" hidden={hidden}>
       <StyledCheckboxRoot
         id={id}
         checked={checked}
-        onCheckedChange={handleClick}
         disabled={item.disabled}
         $size={size}
         $variant={variant}
+        onCheckedChange={handleClick}
       >
         <Checkbox.Indicator>
           {icon === "check" ? (
@@ -67,7 +72,7 @@ const AppCheckbox: FC<AppCheckboxProps> = (props: AppCheckboxProps) => {
           {item.label}
         </StyledLabel>
       ) : (
-        item.label ?? <></>
+        <Box onClick={handleClick}>{item.label ?? <></>}</Box>
       )}
     </Flex>
   );

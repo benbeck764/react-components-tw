@@ -1,8 +1,9 @@
 import React, { FC, PropsWithChildren } from "react";
 import type { Preview } from "@storybook/react";
 import { useDarkMode } from "storybook-dark-mode";
-import { Theme, ThemeOptions, ThemePanel, Card } from "@radix-ui/themes";
+import { Theme, ThemeOptions, ThemePanel } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
+import AppCard from "../src/Card/AppCard";
 
 const ThemeWrapper: FC<PropsWithChildren> = (props: PropsWithChildren) => {
   const { children } = props;
@@ -17,7 +18,7 @@ const ThemeWrapper: FC<PropsWithChildren> = (props: PropsWithChildren) => {
 
   return (
     <Theme {...themeProps}>
-      <Card>{children} </Card>
+      <AppCard size="small">{children} </AppCard>
     </Theme>
   );
 };

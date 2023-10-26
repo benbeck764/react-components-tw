@@ -1,16 +1,11 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import AppCheckbox, { AppCheckboxProps, CheckboxItem } from "./AppCheckbox";
+import AppCheckbox from "./AppCheckbox";
 import { Box, Flex, Text } from "@radix-ui/themes";
+import { AppCheckboxProps, CheckboxItem } from "./AppCheckbox.props";
 
 type AppCheckboxStoryProps = AppCheckboxProps;
 type Story = StoryObj<typeof AppCheckbox>;
-
-const items: CheckboxItem[] = [
-  { label: "React", checked: false },
-  { label: "Angular", checked: false },
-  { label: "Vue", checked: false },
-];
 
 const itemsChecked: CheckboxItem[] = [
   { label: "React", checked: true },

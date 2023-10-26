@@ -4,10 +4,10 @@ import { AppCheckboxSize, AppCheckboxVariant } from "./AppCheckbox.props";
 import { CheckIcon, MinusIcon } from "@radix-ui/react-icons";
 import { Text } from "@radix-ui/themes";
 
-const sizeStyles = {
-  small: "16px",
-  medium: "20px",
-  large: "24px",
+const sizeStyles: Record<AppCheckboxSize, string> = {
+  small: `calc(var(--space-4) * 0.875)`,
+  medium: `var(--space-4)`,
+  large: `calc(var(--space-4) * 1.25)`,
 };
 
 export const StyledCheckboxRoot = styled(Checkbox.Root)<{
@@ -36,15 +36,16 @@ export const StyledCheckboxRoot = styled(Checkbox.Root)<{
   box-shadow: ${({ $variant }) =>
     $variant === "classic" &&
     `inset 0 .5px .5px var(--white-a4),inset 0 -.5px .5px var(--black-a4)`};
-  background-image: ${({ $variant }) =>
+  background-image: ${({ $variant, checked, disabled }) =>
     $variant === "classic" &&
+    checked &&
     `linear-gradient(to bottom,var(--white-a3),transparent,var(--black-a1))`};
 `;
 
-const iconSizeStyles = {
-  small: "14px",
-  medium: "18px",
-  large: "22px",
+const iconSizeStyles: Record<AppCheckboxSize, string> = {
+  small: `calc(${sizeStyles["small"]})`,
+  medium: `calc(${sizeStyles["medium"]} + 1px)`,
+  large: `calc(${sizeStyles["large"]} + 2px)`,
 };
 
 const iconStyles = css<{
@@ -68,6 +69,7 @@ export const StyledCheckIcon = styled(CheckIcon)<{
   ${iconStyles}
   height: ${({ $size }) => iconSizeStyles[$size]};
   width: ${({ $size }) => iconSizeStyles[$size]};
+  margin-top: 2px;
 `;
 
 export const StyledMinusIcon = styled(MinusIcon)<{
