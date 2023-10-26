@@ -11,15 +11,13 @@ export type AppButtonVariant =
   | "outline"
   | "ghost";
 
-export type AppButtonProps = {
+export type AppButtonProps = PropsWithChildren<{
   size?: AppButtonSize;
   variant?: AppButtonVariant;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-};
+}>;
 
-const AppButton: FC<PropsWithChildren<AppButtonProps>> = (
-  props: PropsWithChildren<AppButtonProps>
-) => {
+const AppButton: FC<AppButtonProps> = (props: AppButtonProps) => {
   const {
     children,
     size = "medium",
