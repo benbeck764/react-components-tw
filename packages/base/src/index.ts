@@ -13,3 +13,6 @@ export * from "./Checkbox";
 
 export { default as AppCheckboxList } from "./CheckboxList";
 export * from "./CheckboxList";
+
+export { default as AppChip } from "./Chip";
+export * from "./Chip";
