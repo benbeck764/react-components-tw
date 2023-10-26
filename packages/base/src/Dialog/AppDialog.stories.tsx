@@ -8,21 +8,23 @@ type AppDialogStoryProps = AppDialogProps;
 type Story = StoryObj<typeof AppDialog>;
 
 export const Dialogs: Story = (args: AppDialogStoryProps) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [openScrollable, setOpenScrollable] = useState<boolean>(false);
+  const [open1, setOpen1] = useState<boolean>(false);
+  const [open2, setOpen2] = useState<boolean>(false);
+  const [open3, setOpen3] = useState<boolean>(false);
+  const [open4, setOpen4] = useState<boolean>(false);
 
   return (
     <Flex gap="3">
       <Box>
-        <AppButton onClick={() => setOpen(!open)}>Open Dialog</AppButton>
+        <AppButton onClick={() => setOpen1(!open1)}>Open Dialog</AppButton>
         <AppDialog
-          open={open}
-          onClose={() => setOpen(false)}
+          open={open1}
+          onClose={() => setOpen1(false)}
           title="My Dialog"
           primaryButtonProps={{ children: "Continue", onClick: () => void 0 }}
           secondaryButtonProps={{
             children: "Cancel",
-            onClick: () => setOpen(false),
+            onClick: () => setOpen1(false),
           }}
         >
           <Box>Hello World!</Box>
@@ -30,22 +32,57 @@ export const Dialogs: Story = (args: AppDialogStoryProps) => {
         </AppDialog>
       </Box>
       <Box>
-        <AppButton onClick={() => setOpenScrollable(!open)}>
+        <AppButton onClick={() => setOpen2(!open2)}>
           Scrollable Dialog
         </AppButton>
         <AppDialog
-          open={openScrollable}
-          onClose={() => setOpenScrollable(false)}
+          open={open2}
+          onClose={() => setOpen2(false)}
           title="My Dialog"
           primaryButtonProps={{ children: "Continue", onClick: () => void 0 }}
           secondaryButtonProps={{
             children: "Cancel",
-            onClick: () => setOpenScrollable(false),
+            onClick: () => setOpen2(false),
           }}
+          allowScroll
         >
           {Array.from(Array(35).keys()).map(() => (
             <Box>Hello World!</Box>
           ))}
+        </AppDialog>
+      </Box>
+      <Box>
+        <AppButton onClick={() => setOpen3(!open3)}>Backdrop Close</AppButton>
+        <AppDialog
+          open={open3}
+          onClose={() => setOpen3(false)}
+          title="My Dialog"
+          primaryButtonProps={{ children: "Continue", onClick: () => void 0 }}
+          secondaryButtonProps={{
+            children: "Cancel",
+            onClick: () => setOpen3(false),
+          }}
+          allowBackdropClickClose
+        >
+          <Box>Hello World!</Box>
+          <Box>Here are some contents for a Dialog...</Box>
+        </AppDialog>
+      </Box>
+      <Box>
+        <AppButton onClick={() => setOpen4(!open4)}>Esc Close</AppButton>
+        <AppDialog
+          open={open4}
+          onClose={() => setOpen4(false)}
+          title="My Dialog"
+          primaryButtonProps={{ children: "Continue", onClick: () => void 0 }}
+          secondaryButtonProps={{
+            children: "Cancel",
+            onClick: () => setOpen4(false),
+          }}
+          allowEscapeKeyClose
+        >
+          <Box>Hello World!</Box>
+          <Box>Here are some contents for a Dialog...</Box>
         </AppDialog>
       </Box>
     </Flex>

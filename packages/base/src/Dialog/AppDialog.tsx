@@ -70,14 +70,28 @@ const AppDialog: FC<PropsWithChildren<AppDialogProps>> = (
         }
       >
         <StyledDialogOverlay />
-        <StyledDialogContent $allowScroll={allowScroll}>
+        <StyledDialogContent
+          $allowScroll={allowScroll}
+          onPointerDownOutside={() => {
+            if (allowBackdropClickClose) onClose?.();
+          }}
+          onEscapeKeyDown={() => {
+            if (allowEscapeKeyClose) onClose?.();
+          }}
+        >
           <Flex
             direction="row"
             justify="between"
             align="center"
             pb={!title && hideCloseButton ? "0" : "2"}
           >
-            <Box>{title && <Heading as="h6">{title}</Heading>}</Box>
+            <Box>
+              {title && (
+                <Dialog.Title asChild>
+                  <Heading as="h6">{title}</Heading>
+                </Dialog.Title>
+              )}
+            </Box>
             <Box>
               {!hideCloseButton && (
                 <Dialog.Close asChild>
