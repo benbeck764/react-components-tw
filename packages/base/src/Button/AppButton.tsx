@@ -1,5 +1,5 @@
 "use client";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, forwardRef, ForwardedRef } from "react";
 import { StyledButton } from "./AppButton.styles";
 
 export type AppButtonSize = "extra-small" | "small" | "medium" | "large";
@@ -17,19 +17,21 @@ export type AppButtonProps = PropsWithChildren<{
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }>;
 
-const AppButton: FC<AppButtonProps> = (props: AppButtonProps) => {
-  const {
-    children,
-    size = "medium",
-    variant = "solid",
-    onClick,
-  } = { ...props };
+const AppButton = forwardRef<HTMLButtonElement, AppButtonProps>(
+  (props: AppButtonProps, ref: ForwardedRef<HTMLButtonElement>) => {
+    const {
+      children,
+      size = "medium",
+      variant = "solid",
+      onClick,
+    } = { ...props };
 
-  return (
-    <StyledButton variant={variant} $size={size} onClick={onClick}>
-      {children}
-    </StyledButton>
-  );
-};
+    return (
+      <StyledButton variant={variant} $size={size} onClick={onClick} ref={ref}>
+        {children}
+      </StyledButton>
+    );
+  }
+);
 
 export default AppButton;

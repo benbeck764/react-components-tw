@@ -60,25 +60,6 @@ export const StyledDialogContent = styled(Dialog.Content as any)<{
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 `;
 
-export const StyledDialogCloseButton = styled(Button)<{}>`
-  all: unset;
-  font-family: inherit;
-  border-radius: 100%;
-  height: 25px;
-  width: 25px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-a11);
-
-  &:focus {
-    background-color: var(--accent-a4);
-  }
-  &:hover {
-    box-shadow: 0 0 0 2px var(--accent-a7);
-  }
-`;
-
 export const StyledDialogFooter = styled(Flex)<{}>`
   flex-direction: row;
   align-items: center;

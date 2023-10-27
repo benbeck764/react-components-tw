@@ -2,17 +2,16 @@
 import { FC, PropsWithChildren, MouseEvent, useMemo } from "react";
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross1Icon } from "@radix-ui/react-icons";
 import { AppButtonProps } from "../Button/AppButton";
 import debounce from "../utilities/debounce";
 import {
-  StyledDialogCloseButton,
   StyledDialogContent,
   StyledDialogFooter,
   StyledDialogOverlay,
   StyledDialogPrimaryButton,
   StyledDialogSecondaryButton,
 } from "./AppDialog.styles";
+import { CloseButton } from "../common/CloseButton/AppCloseButton";
 
 export type AppDialogProps = {
   open: boolean;
@@ -95,9 +94,7 @@ const AppDialog: FC<PropsWithChildren<AppDialogProps>> = (
             <Box>
               {!hideCloseButton && (
                 <Dialog.Close asChild>
-                  <StyledDialogCloseButton onClick={() => onClose?.()}>
-                    <Cross1Icon />
-                  </StyledDialogCloseButton>
+                  <CloseButton onClick={() => onClose?.()} />
                 </Dialog.Close>
               )}
             </Box>
