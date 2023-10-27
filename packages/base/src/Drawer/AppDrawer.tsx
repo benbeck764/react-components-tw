@@ -13,16 +13,16 @@ import {
   StyledPanelBox,
 } from "./AppDrawer.styles";
 import { StyledDialogOverlay } from "../Dialog/AppDialog.styles";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 export type AppDrawerMode = "menu" | "panel";
+export type AppDrawerAnchor = "left" | "top" | "right" | "bottom";
 export interface AppDrawerProps {
   mode: AppDrawerMode;
   open: boolean;
-  anchor?: "left" | "top" | "right" | "bottom";
+  triggerComponent?: React.ReactNode;
+  anchor?: AppDrawerAnchor;
   displayDividers?: boolean;
   closeOnSelect?: boolean;
-  buttonProps?: AppButtonProps;
   listProps?: React.ButtonHTMLAttributes<HTMLUListElement>;
   panelStyle?: React.CSSProperties;
   prefix?: React.ReactNode | string;
@@ -36,10 +36,11 @@ const AppDrawer: FC<PropsWithChildren<AppDrawerProps>> = (
   const {
     children,
     mode,
+    open,
+    triggerComponent,
+    anchor = "left",
     displayDividers,
     closeOnSelect,
-    buttonProps,
-    open,
     listProps,
     panelStyle,
     prefix,
@@ -59,13 +60,9 @@ const AppDrawer: FC<PropsWithChildren<AppDrawerProps>> = (
     <Dialog.Root open={open}>
       {closeButtonContainer &&
         ReactDOM.createPortal(closeButton, closeButtonContainer)}
-      {buttonProps && (
-        <Dialog.Trigger>
-          <AppButton {...buttonProps}>
-            <HamburgerMenuIcon />
-          </AppButton>
-        </Dialog.Trigger>
-      )}
+      <Dialog.Trigger asChild>
+        {triggerComponent ?? <AppButton>OPEN</AppButton>}
+      </Dialog.Trigger>
       <Dialog.Portal
         container={
           (document.getElementsByClassName(
@@ -75,12 +72,15 @@ const AppDrawer: FC<PropsWithChildren<AppDrawerProps>> = (
       >
         <StyledDialogOverlay />
         <StyledDrawerContent
+          $anchor={anchor}
+          $open={open}
           onPointerDownOutside={() => {
             onClose?.();
           }}
           onEscapeKeyDown={() => {
             onClose?.();
           }}
+          style={panelStyle}
         >
           {mode === "menu" && (
             <StyledList {...listProps}>

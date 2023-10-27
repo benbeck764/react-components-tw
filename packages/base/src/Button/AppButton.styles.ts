@@ -16,6 +16,13 @@ const fontSizes: Record<AppButtonSize, string> = {
   large: "var(--font-size-3)",
 };
 
+const iconSizes: Record<AppButtonSize, string> = {
+  "extra-small": `calc(var(--space-5) * 0.675)`,
+  small: `calc(var(--space-5) * 0.875)`,
+  medium: `var(--space-5)`,
+  large: `calc(var(--space-5) * 1.25)`,
+};
+
 export const StyledButton = styled(Button)<{
   $size: AppButtonSize;
   variant: AppButtonVariant;
@@ -30,4 +37,9 @@ export const StyledButton = styled(Button)<{
       padding-top: 0;
       padding-bottom: 0;
     `}
+
+  & > svg {
+    height: ${({ $size }) => iconSizes[$size]};
+    width: ${({ $size }) => iconSizes[$size]};
+  }
 `;

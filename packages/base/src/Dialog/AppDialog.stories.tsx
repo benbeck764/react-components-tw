@@ -46,8 +46,8 @@ export const Dialogs: Story = (args: AppDialogStoryProps) => {
           }}
           allowScroll
         >
-          {Array.from(Array(35).keys()).map(() => (
-            <Box>Hello World!</Box>
+          {Array.from(Array(35).keys()).map((key: number) => (
+            <Box key={key}>Hello World!</Box>
           ))}
         </AppDialog>
       </Box>
